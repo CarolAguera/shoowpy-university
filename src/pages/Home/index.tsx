@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import { CardProduto } from "../../components/CardProduto";
 import { Footer } from "../../components/Footer";
 import { Menu } from "../../components/Menu";
 
 export const Home = () => {
+    useEffect(() => {
+        // axios.get()
+    }, []);
+
     return (
         <>
             <Menu />
@@ -28,7 +33,7 @@ export const Home = () => {
                     />
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </>
     );
 };
