@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import { useEffect, useState } from "react";
+import axios from "axios";
 import {
     LeftContainer,
     NavbarContainer,
@@ -8,14 +8,13 @@ import {
     NavbarLinkExtend,
     NavInnerContainer,
     OpenLinkButton,
-    RightContainer
-} from './styles'
-
-// https://github.com/profchines
+    RightContainer,
+} from "./styles";
+import { FaShoppingCart } from "react-icons/fa";
 
 interface interfData {
-    id: number,
-    categoria: string
+    id: number;
+    categoria: string;
 }
 
 export const Menu = () => {
@@ -23,81 +22,54 @@ export const Menu = () => {
     const [dataMenu, setMenu] = useState<Array<interfData>>([]);
 
     useEffect(() => {
-
-        axios.get('http://localhost:3001/categorias')
+        axios
+            .get("http://localhost:3001/categorias")
             .then((response) => {
-                setMenu(response.data)
+                setMenu(response.data);
             })
             .catch((erro) => {
-                console.log(erro)
-            })
-
-    }, [])
+                console.log(erro);
+            });
+    }, []);
 
     return (
-        <NavbarContainer
-            extendNavbar={extendNavbar}
-        >
+        <NavbarContainer extendNavbar={extendNavbar}>
             <NavInnerContainer>
                 <LeftContainer>
-
                     <OpenLinkButton
                         onClick={() => {
-
-                            setExtendNavBar((atual) => !atual)
-
+                            setExtendNavBar((atual) => !atual);
                         }}
                     >
                         {extendNavbar ? <>&#10005;</> : <>&#8801;</>}
                     </OpenLinkButton>
 
-                    <NavbarLinkExtend
-                        to='/'
-                    >
-                        Shoowpy
-                    </NavbarLinkExtend>
+                    <NavbarLinkExtend to="/">Shoowpy</NavbarLinkExtend>
 
-                    <NavbarLink to='/'>Home</NavbarLink>
-                    {
-                        dataMenu.map((menu) => (
-                            <NavbarLink
-                                key={menu.id}
-                                to='/'
-                            >
-                                {
-                                    menu.categoria
-                                }
-                            </NavbarLink>
-                        ))
-                    }
-
+                    <NavbarLink to="/">Home</NavbarLink>
+                    {dataMenu.map((menu) => (
+                        <NavbarLink key={menu.id} to="/">
+                            {menu.categoria}
+                        </NavbarLink>
+                    ))}
                 </LeftContainer>
                 <RightContainer>
-                    <NavbarLinkExtend to='/' >
+                    <NavbarLinkExtend to="/">
+                        <FaShoppingCart />
                         Carrinho
                     </NavbarLinkExtend>
                 </RightContainer>
             </NavInnerContainer>
 
-            {
-                extendNavbar && (
-                    <NavbarExtendContainer>
-                        {
-                            dataMenu.map((menu) => (
-                                <NavbarLinkExtend
-                                    key={menu.id}
-                                    to='/'
-                                >
-                                    {
-                                        menu.categoria
-                                    }
-                                </NavbarLinkExtend>
-                            ))
-                        }
-                    </NavbarExtendContainer>
-                )
-            }
-
+            {extendNavbar && (
+                <NavbarExtendContainer>
+                    {dataMenu.map((menu) => (
+                        <NavbarLinkExtend key={menu.id} to="/">
+                            {menu.categoria}
+                        </NavbarLinkExtend>
+                    ))}
+                </NavbarExtendContainer>
+            )}
         </NavbarContainer>
-    )
-}
+    );
+};
